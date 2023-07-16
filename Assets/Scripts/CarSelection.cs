@@ -11,10 +11,12 @@ public class CarSelection : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI brakeHorsepowerText, zeroToSixtyInSecondsText, priceText;
     private float currentBrakeHorsepower, currentZeroToSixtyInSeconds, currentPrice;
+    private int carsListIndex;
     // Start is called before the first frame update
     void Start()
     {
         currentlySelectedCar = cars[0];
+        carsListIndex = 0;
         Debug.Log("Car: " + currentlySelectedCar.modelPrefab.name + ", BHP: " + currentlySelectedCar.brakeHorsepower + ", 0-60mph in " + currentlySelectedCar.zeroToSixtyInSeconds + " seconds, Price: £" + currentlySelectedCar.basePrice);
         DisplayCarInfo(currentlySelectedCar);
     }
@@ -25,19 +27,23 @@ public class CarSelection : MonoBehaviour
         
     }
 
-    //public Car chooseNewCar()
+    //public void chooseNewCar()
     //{
     //    Car newCar;
 
     //    return newCar;
     //}
-    //public Car nextCar()
+    //public void nextCar()
     //{
-
+    //  carsListIndex++;
+    //  currentlySelectedCar = cars[carsListIndex];
+    //  DisplayCarInfo(currentlySelectedCar);
     //}
     //public Car previousCar() 
     //{
-
+    //  carsListIndex--;
+    //  currentlySelectedCar = cars[carsListIndex];
+    //  DisplayCarInfo(currentlySelectedCar);
     //}
 
     private void DisplayCarInfo(Car car)
