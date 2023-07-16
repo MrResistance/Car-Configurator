@@ -1,8 +1,7 @@
 using UnityEngine;
-
+[System.Serializable]
 public class Car
 {
-    [SerializeField]
-    private GameObject modelPrefab;
-    private float brakeHorsepower, zeroToSixtyInSeconds, basePrice;
+    public GameObject modelPrefab;
+    public float brakeHorsepower, zeroToSixtyInSeconds, basePrice;
 }

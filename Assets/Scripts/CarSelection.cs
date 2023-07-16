@@ -14,6 +14,9 @@ public class CarSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentlySelectedCar = cars[0];
+        Debug.Log("Car: " + currentlySelectedCar.modelPrefab.name + ", BHP: " + currentlySelectedCar.brakeHorsepower + ", 0-60mph in " + currentlySelectedCar.zeroToSixtyInSeconds + " seconds, Price: £" + currentlySelectedCar.basePrice);
+        DisplayCarInfo(currentlySelectedCar);
     }
 
     // Update is called once per frame
@@ -39,8 +42,8 @@ public class CarSelection : MonoBehaviour
 
     private void DisplayCarInfo(Car car)
     {
-        brakeHorsepowerText.text = currentBrakeHorsepower.ToString();
-        zeroToSixtyInSecondsText.text = currentZeroToSixtyInSeconds.ToString();
-        priceText.text = currentPrice.ToString();
+        brakeHorsepowerText.text = "Brake Horsepower: " + car.brakeHorsepower.ToString();
+        zeroToSixtyInSecondsText.text = "0-60mph in " + car.zeroToSixtyInSeconds.ToString() + " seconds.";
+        priceText.text = "£" + car.basePrice.ToString();
     }
 }
