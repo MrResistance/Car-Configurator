@@ -19,7 +19,6 @@ public class CarSelection : MonoBehaviour
         currentlySelectedCar = cars[0];
         carsListIndex = 0;
         InitialiseCarModels();
-        //Debug.Log("Car: " + currentlySelectedCar.modelPrefab.name + ", BHP: " + currentlySelectedCar.brakeHorsepower + ", 0-60mph in " + currentlySelectedCar.zeroToSixtyInSeconds + " seconds, Price: £" + currentlySelectedCar.basePrice);
         DisplayCarInfo(currentlySelectedCar);
         DisplayCarModel(carsListIndex);
     }
@@ -53,24 +52,6 @@ public class CarSelection : MonoBehaviour
     {
         carModelsParent.GetChild(index).gameObject.SetActive(false);
     }
-    //public void previousCar()
-    //{
-    //    int nextIndex = 0;
-        
-    //    // To ensure that the nextIndex field doesn't go outside the bounds of the array
-    //    if (nextIndex < 0)
-    //    {
-    //        nextIndex = cars.Count - 1;
-    //    }
-    //    if (nextIndex > cars.Count)
-    //    {
-    //        nextIndex = 0;
-    //    }
-    //    carsListIndex = nextIndex;
-    //    currentlySelectedCar = cars[carsListIndex];
-    //    DisplayCarInfo(currentlySelectedCar);
-    //    DisplayCarModel(carsListIndex);
-    //}
     private void InitialiseCarModels()
     {
         foreach (Car car in cars)
