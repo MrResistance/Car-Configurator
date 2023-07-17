@@ -10,42 +10,78 @@ public class CarSelection : MonoBehaviour
     private List<Car> cars;
     [SerializeField]
     private TextMeshProUGUI brakeHorsepowerText, zeroToSixtyInSecondsText, priceText;
-    private float currentBrakeHorsepower, currentZeroToSixtyInSeconds, currentPrice;
+    [SerializeField]
+    private Transform carModelsParent;
     private int carsListIndex;
     // Start is called before the first frame update
     void Start()
     {
         currentlySelectedCar = cars[0];
         carsListIndex = 0;
-        Debug.Log("Car: " + currentlySelectedCar.modelPrefab.name + ", BHP: " + currentlySelectedCar.brakeHorsepower + ", 0-60mph in " + currentlySelectedCar.zeroToSixtyInSeconds + " seconds, Price: £" + currentlySelectedCar.basePrice);
+        InitialiseCarModels();
+        //Debug.Log("Car: " + currentlySelectedCar.modelPrefab.name + ", BHP: " + currentlySelectedCar.brakeHorsepower + ", 0-60mph in " + currentlySelectedCar.zeroToSixtyInSeconds + " seconds, Price: £" + currentlySelectedCar.basePrice);
         DisplayCarInfo(currentlySelectedCar);
+        DisplayCarModel(carsListIndex);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void nextCar(bool value)
     {
-        
+        HideCurrentCarModel(carsListIndex);
+        int nextIndex = 0;
+        if (value == true)
+        {
+            nextIndex = (carsListIndex + 1) % cars.Count;
+        }
+        else
+        {
+            nextIndex = (carsListIndex - 1) % cars.Count;
+        }
+        // To ensure that the nextIndex field doesn't go outside the bounds of the array
+        if (nextIndex < 0)
+        {
+            nextIndex = cars.Count - 1;
+        }
+        if (nextIndex > cars.Count)
+        {
+            nextIndex = 0;
+        }
+        carsListIndex = nextIndex;
+        currentlySelectedCar = cars[carsListIndex];
+        DisplayCarInfo(currentlySelectedCar);
+        DisplayCarModel(carsListIndex);
     }
-
-    //public void chooseNewCar()
+    private void HideCurrentCarModel(int index)
+    {
+        carModelsParent.GetChild(index).gameObject.SetActive(false);
+    }
+    //public void previousCar()
     //{
-    //    Car newCar;
-
-    //    return newCar;
+    //    int nextIndex = 0;
+        
+    //    // To ensure that the nextIndex field doesn't go outside the bounds of the array
+    //    if (nextIndex < 0)
+    //    {
+    //        nextIndex = cars.Count - 1;
+    //    }
+    //    if (nextIndex > cars.Count)
+    //    {
+    //        nextIndex = 0;
+    //    }
+    //    carsListIndex = nextIndex;
+    //    currentlySelectedCar = cars[carsListIndex];
+    //    DisplayCarInfo(currentlySelectedCar);
+    //    DisplayCarModel(carsListIndex);
     //}
-    //public void nextCar()
-    //{
-    //  carsListIndex++;
-    //  currentlySelectedCar = cars[carsListIndex];
-    //  DisplayCarInfo(currentlySelectedCar);
-    //}
-    //public Car previousCar() 
-    //{
-    //  carsListIndex--;
-    //  currentlySelectedCar = cars[carsListIndex];
-    //  DisplayCarInfo(currentlySelectedCar);
-    //}
-
+    private void InitialiseCarModels()
+    {
+        foreach (Car car in cars)
+        {
+            Instantiate(car.modelPrefab, carModelsParent).SetActive(false);
+        }
+    }
+    private void DisplayCarModel(int carIndex)
+    {
+        carModelsParent.GetChild(carIndex).gameObject.SetActive(true);
+    }
     private void DisplayCarInfo(Car car)
     {
         brakeHorsepowerText.text = "Brake Horsepower: " + car.brakeHorsepower.ToString();
