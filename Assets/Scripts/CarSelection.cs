@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarSelection : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class CarSelection : MonoBehaviour
     private TextMeshProUGUI brakeHorsepowerText, zeroToSixtyInSecondsText, priceText;
     [SerializeField]
     private Transform carModelsParent;
+    [SerializeField]
+    private TMP_Dropdown selectCar;
+    private List<string> carNames = new();
     private int carsListIndex;
     // Start is called before the first frame update
     void Start()
@@ -21,10 +26,29 @@ public class CarSelection : MonoBehaviour
         InitialiseCarModels();
         DisplayCarInfo(currentlySelectedCar);
         DisplayCarModel(carsListIndex);
+        CreateOptionData();
     }
-    public void nextCar(bool value)
+    private void CreateOptionData()
     {
-        HideCurrentCarModel(carsListIndex);
+        carNames.Clear();
+        foreach (Car car in cars)
+        {
+            carNames.Add(car.modelPrefab.name);
+        }
+        selectCar.ClearOptions();
+        selectCar.AddOptions(carNames);
+    }
+    public void ChooseNewCar()
+    {
+        HideCarModel(carsListIndex);
+        carsListIndex = selectCar.value;
+        currentlySelectedCar = cars[carsListIndex];
+        DisplayCarInfo(currentlySelectedCar);
+        DisplayCarModel(carsListIndex);
+    }
+    public void NextCar(bool value)
+    {
+        HideCarModel(carsListIndex);
         int nextIndex = 0;
         if (value == true)
         {
@@ -47,8 +71,9 @@ public class CarSelection : MonoBehaviour
         currentlySelectedCar = cars[carsListIndex];
         DisplayCarInfo(currentlySelectedCar);
         DisplayCarModel(carsListIndex);
+        selectCar.SetValueWithoutNotify(carsListIndex);
     }
-    private void HideCurrentCarModel(int index)
+    private void HideCarModel(int index)
     {
         carModelsParent.GetChild(index).gameObject.SetActive(false);
     }
