@@ -122,7 +122,7 @@ public class CarSelection : MonoBehaviour
         modelName.text = "Model Name: " + car.modelPrefab.name.ToString();
         brakeHorsepowerText.text = "Brake Horsepower: " + car.brakeHorsepower.ToString();
         zeroToSixtyInSecondsText.text = "0-60mph in " + car.zeroToSixtyInSeconds.ToString() + " seconds.";
-        priceText.text = "£" + car.basePrice.ToString("n0");
+        priceText.text = "Price: £" + car.basePrice.ToString("n0");
     }
     public void ChangeCarModelColour(string hexColor)
     {
@@ -140,11 +140,11 @@ public class CarSelection : MonoBehaviour
         if (customColor)
         {
             currentPrice *= 1.2f;
-            priceText.text = "£" + currentPrice.ToString("n0");
+            priceText.text = "Price: £" + currentPrice.ToString("n0");
         }
         else
         {
-            priceText.text = "£" + currentPrice.ToString("n0");
+            priceText.text = "Price: £" + currentPrice.ToString("n0");
         }
     }
 }
