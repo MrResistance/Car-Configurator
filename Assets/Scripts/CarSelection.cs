@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using ColorUtility = UnityEngine.ColorUtility;
 
 public class CarSelection : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class CarSelection : MonoBehaviour
     private TMP_Dropdown selectCar;
     private List<string> carNames = new();
     private int carsListIndex;
+    private bool customColor = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,8 +49,9 @@ public class CarSelection : MonoBehaviour
     }
     public void NextCar(bool value)
     {
+        ChangeCarModelColour("#FFFFFF");
         HideCarModel(carsListIndex);
-        int nextIndex = 0;
+        int nextIndex;
         if (value == true)
         {
             nextIndex = (carsListIndex + 1) % cars.Count;
@@ -92,6 +94,28 @@ public class CarSelection : MonoBehaviour
     {
         brakeHorsepowerText.text = "Brake Horsepower: " + car.brakeHorsepower.ToString();
         zeroToSixtyInSecondsText.text = "0-60mph in " + car.zeroToSixtyInSeconds.ToString() + " seconds.";
-        priceText.text = "£" + car.basePrice.ToString();
+        priceText.text = "£" + car.basePrice.ToString("n0");
+    }
+    public void ChangeCarModelColour(string hexColor)
+    {
+        if (ColorUtility.TryParseHtmlString(hexColor, out Color color))
+        {
+            carModelsParent.GetChild(carsListIndex).GetComponentInChildren<MeshRenderer>().material.color = color;
+            if (hexColor != "#FFFFFF") customColor = true; else customColor = false;
+            UpdatePrice();
+        }
+    }
+    private void UpdatePrice()
+    {
+        float currentPrice = cars[carsListIndex].basePrice;
+        if (customColor)
+        {
+            currentPrice *= 1.2f;
+            priceText.text = "£" + currentPrice.ToString("n0");
+        }
+        else
+        {
+            priceText.text = "£" + currentPrice.ToString("n0");
+        }
     }
 }
