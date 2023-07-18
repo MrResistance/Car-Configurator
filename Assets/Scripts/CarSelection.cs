@@ -39,7 +39,6 @@ public class CarSelection : MonoBehaviour
         DisplayCarModel(carsListIndex);
         //Populate the car selection dropdown with the list of cars
         CreateOptionData();
-        Debug.Log(cars.Count);
     }
     private void CreateOptionData()
     {
