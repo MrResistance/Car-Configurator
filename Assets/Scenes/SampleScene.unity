@@ -2934,11 +2934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b1a832c54165d44938fadcc2336880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentlySelectedCar:
-    modelPrefab: {fileID: 0}
-    brakeHorsepower: 0
-    zeroToSixtyInSeconds: 0
-    basePrice: 0
   cars:
   - modelPrefab: {fileID: 3784087677487629359, guid: 35ade12cb073d984b8ce1072887af60c, type: 3}
     brakeHorsepower: 300
@@ -2956,8 +2951,8 @@ MonoBehaviour:
   brakeHorsepowerText: {fileID: 580156931}
   zeroToSixtyInSecondsText: {fileID: 1712799888}
   priceText: {fileID: 1278840260}
+  selectCarDropdown: {fileID: 1587374022}
   carModelsParent: {fileID: 384372832}
-  selectCar: {fileID: 1587374022}
 --- !u!4 &1476589463
 Transform:
   m_ObjectHideFlags: 0
