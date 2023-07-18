@@ -1,32 +1,43 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using ColorUtility = UnityEngine.ColorUtility;
 
 public class CarSelection : MonoBehaviour
 {
-    [SerializeField]
     private Car currentlySelectedCar = new();
     [SerializeField]
     private List<Car> cars;
+    [Header("UI")]
     [SerializeField]
-    private TextMeshProUGUI brakeHorsepowerText, zeroToSixtyInSecondsText, priceText;
+    private TextMeshProUGUI modelName;
+    [SerializeField]
+    private TextMeshProUGUI brakeHorsepowerText;
+    [SerializeField]
+    private TextMeshProUGUI zeroToSixtyInSecondsText;
+    [SerializeField]
+    private TextMeshProUGUI priceText;
+    [SerializeField]
+    private TMP_Dropdown selectCarDropdown;
+    [Header("Car Models")]
     [SerializeField]
     private Transform carModelsParent;
-    [SerializeField]
-    private TMP_Dropdown selectCar;
     private List<string> carNames = new();
     private int carsListIndex;
     private bool customColor = false;
     // Start is called before the first frame update
     void Start()
     {
+        //Set the current car to the first one in the list
         currentlySelectedCar = cars[0];
         carsListIndex = 0;
+        //Instantiate all the car models, but set them as inactive
         InitialiseCarModels();
+        //Display the specifications in the UI of our currently selected car
         DisplayCarInfo(currentlySelectedCar);
+        //Display the physical model of our currently selected car
         DisplayCarModel(carsListIndex);
+        //Populate the car selection dropdown with the list of cars
         CreateOptionData();
     }
     private void CreateOptionData()
@@ -36,13 +47,13 @@ public class CarSelection : MonoBehaviour
         {
             carNames.Add(car.modelPrefab.name);
         }
-        selectCar.ClearOptions();
-        selectCar.AddOptions(carNames);
+        selectCarDropdown.ClearOptions();
+        selectCarDropdown.AddOptions(carNames);
     }
     public void ChooseNewCar()
     {
         HideCarModel(carsListIndex);
-        carsListIndex = selectCar.value;
+        carsListIndex = selectCarDropdown.value;
         currentlySelectedCar = cars[carsListIndex];
         DisplayCarInfo(currentlySelectedCar);
         DisplayCarModel(carsListIndex);
@@ -73,7 +84,7 @@ public class CarSelection : MonoBehaviour
         currentlySelectedCar = cars[carsListIndex];
         DisplayCarInfo(currentlySelectedCar);
         DisplayCarModel(carsListIndex);
-        selectCar.SetValueWithoutNotify(carsListIndex);
+        selectCarDropdown.SetValueWithoutNotify(carsListIndex);
     }
     private void HideCarModel(int index)
     {
@@ -92,6 +103,7 @@ public class CarSelection : MonoBehaviour
     }
     private void DisplayCarInfo(Car car)
     {
+        modelName.text = "Model Name: " + car.modelPrefab.name.ToString();
         brakeHorsepowerText.text = "Brake Horsepower: " + car.brakeHorsepower.ToString();
         zeroToSixtyInSecondsText.text = "0-60mph in " + car.zeroToSixtyInSeconds.ToString() + " seconds.";
         priceText.text = "£" + car.basePrice.ToString("n0");
